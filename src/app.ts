@@ -19,7 +19,11 @@ app.get("/", (req, res) => {
 });
 
 app.get("/get", (req, res) => {
-    res.send("Hi")
-})
+  res.send("Hi");
+});
+
+import authRouter from "./routes/auth.routes";
+
+app.use("/api/auth", authRouter);
 
 export { app };

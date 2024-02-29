@@ -1,15 +1,16 @@
 import mongoose from "mongoose";
+import { envObj } from "../constants";
 
-const DB_NAME = "socialmedia";
+const MONGODB_URI = envObj.MONGODB_URI;
 
 const connectDB = async () => {
   try {
-    const connectionInstance = await mongoose.connect(
-      `${process.env.MONGODB_URI}/${DB_NAME}`
-    );
-    // console.log(
-    //   `/n MongoDb connected !! DB HOST: ${connectionInstance.connection.host}`
-    // );
+    const connectionInstance = await mongoose.connect(MONGODB_URI, {
+      dbName: "chirpbox",
+    });
+    if (connectionInstance) {
+      console.log(`DB Connected succesfully`);
+    }
   } catch (error) {
     console.log("MONOGODB connection error", error);
     process.exit(1);
