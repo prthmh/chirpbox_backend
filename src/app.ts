@@ -23,7 +23,11 @@ app.get("/get", (req, res) => {
 });
 
 import authRouter from "./routes/auth.routes";
+import userRouter from "./routes/user.routes";
+import postRouter from "./routes/post.routes";
 
 app.use("/api/auth", authRouter);
+app.use("/api/users", userRouter);
+app.use("/api/post", postRouter);
 
 export { app };

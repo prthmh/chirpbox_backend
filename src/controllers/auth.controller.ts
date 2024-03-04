@@ -37,8 +37,8 @@ export async function userSignup(req: Request, res: Response) {
 
     const token = jwt.sign(
       {
-        _id: user._id,
-        username: user.username,
+        _id: resUser?._id,
+        username: resUser?.username,
       },
       JWT_SECRET_KEY
     );
@@ -72,14 +72,14 @@ export async function userLogin(req: Request, res: Response) {
       return res.status(401).json({ errorMsg: "Password Incorrect" });
     }
 
+    const foundUser = await User.findById(resUser._id).select("-password");
     const token = jwt.sign(
       {
-        _id: resUser._id,
-        username
+        _id: foundUser?._id,
+        username: foundUser?.username,
       },
       JWT_SECRET_KEY
     );
-    const foundUser = await User.findById(resUser._id).select("-password");
 
     return res.status(200).json({ foundUser, encodedToken: token });
   } catch (e) {
