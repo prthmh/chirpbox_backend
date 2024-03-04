@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
+import { ObjectId } from "mongoose";
 import { User } from "../models/user.model";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
+import UserRequest from "../types";
 
 //get user /api/users
 const getAllUsers = async (req: Request, res: Response) => {
@@ -76,9 +78,6 @@ async function editUser(req: Request, res: Response) {
   }
 }
 
-interface UserRequest extends Request {
-  user?: { _id?: string; username?: string };
-}
 // add post to bookmarks /api/users/bookmark/:postId
 async function addPostToBookmark(req: UserRequest, res: Response) {
   const { _id: userId } = req.user!;
@@ -171,7 +170,7 @@ async function followUserHandler(req: UserRequest, res: Response) {
     const { _id: userId } = req.user!;
     const followUserId = req.params.followUserId;
 
-    if (userId === followUserId) {
+    if (userId! === followUserId) {
       return res.status(400).json({ errorMsg: "You can't follow yourself" });
     }
 

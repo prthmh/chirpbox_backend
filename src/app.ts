@@ -28,6 +28,6 @@ import postRouter from "./routes/post.routes";
 
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRouter);
-app.use("/api/post", postRouter);
+app.use("/api/posts", postRouter);
 
 export { app };
